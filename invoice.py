@@ -1,12 +1,19 @@
+"""
+Author: Dula Temesgen
+program: invoice.py
+
+"""
+
 from customers import Customer
 TAX_RATE = 0.06
 
 class Invoice:
     """invoice class"""
-    def __init__(self, invoice_id, customer, item_price_dict={}):
+    # Constructor
+    def __init__(self, invoice_id, customer, item_price={}):
         self.invoice_id = invoice_id
         self.customer = customer
-        self.items_price_dict = item_price_dict
+        self.item_price = item_price
 
     @property
     def invoice_id(self):
@@ -30,30 +37,41 @@ class Invoice:
             raise ValueError("Not a Cutomer")
 
     @property
-    def item_price_dict(self):
-        return self.item_price_dict
+    def item_price(self):
+        return self.item_price
 
-    @item_price_dict.setter
-    def item_price_dict(self, value):
+    @item_price.setter
+    def item_price(self, value):
         if isinstance(value, dict):
-            self.item_price_dict = value
+            self.item_price = value
         else:
             raise ValueError("That's not a dictionary")
 
-    def add_item(self, dict):
-        self.items_price_dict
-        # print(self.items_price_dict)
+    def add_item(self, value):
+        self.item_price.update(value)
 
     def creat_invoice(self):
-        sub_total = 0
-        receipt = self.customer.display() + '\n'
-        for key, value in self.items_price_dict()
-            sub_total += value
-            receipt += '{}........{:.2f\n'.format(key,value)
-        tax = sub_total * TAX_RATE
-        receipt += "Tax........{:.2f}\n".format(tax)
-        receipt += "Tax........{:.2f}\n".format(total)
-        return receipt
+        total = 0.0
+        for x in self.item_price:
+            total += self.item_price[x]
+            print(str(x) + ': ' + str(self.item_price[x]))
+        TAX_RATE = total * TAX_RATE
+        return ('Tax: {0:.2f}'.format(TAX_RATE))
+        return ('Total: {0:.2f}'.format(total + TAX_RATE))
+
+    def display(self):
+        return (str(self.customer.customer_id) + "\n" + str(self.customer.first_name) + " " + str(self.customer.last_name) + "\n" + str(self.customer.address) + "\n" +
+               self.customer.phone_number)
+
+    def str(self):
+        """returns a string of the Invoice object. same as repr()"""
+        return self.customer.first_name + ' ' + self.customer.last_name + ', ' + self.customer.phone_number
+        
+
+    def repr(self):
+        """returns a string of the Invoice object. same as str()"""
+        return self.customer.first_name + ' ' + self.customer.last_name + ', ' + self.customer.phone_number
+        
 
 # Driver
 captain_mal = Customer(1, 'Reynolds', 'Mel', 'No phones', 'Firefly, somewhere in the verse')
